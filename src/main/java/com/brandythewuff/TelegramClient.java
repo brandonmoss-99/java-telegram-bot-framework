@@ -58,7 +58,6 @@ public class TelegramClient implements ITelegramClient{
         HttpResponse<String> response;
         try{
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.toString());
 
             if(response.statusCode() == 200){
                 toReturn.put("Ok", "True");
@@ -102,7 +101,6 @@ public class TelegramClient implements ITelegramClient{
         String url = GetBaseTelegramUrl(MethodType.GetMe);
         // Get data from telegram
         HashMap<String, String> response = GetTelegramResponse(url);
-        System.out.println("Response output: " + response.toString());
         // Deserialize JSON response into object
         GetMeResponse jsonResponse = JsonParsing.parseResponse(response, GetMeResponse.class);
         return jsonResponse;
@@ -116,7 +114,6 @@ public class TelegramClient implements ITelegramClient{
         String data = JsonSerializing.serialize(update);
         // Send message to telegram and handle response
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println("Response output: " + response.toString());
 
         UpdateResponse responseParsed = JsonParsing.parseResponse(response, UpdateResponse.class);
         return responseParsed;
@@ -127,7 +124,6 @@ public class TelegramClient implements ITelegramClient{
         String data = JsonSerializing.serialize(update);
         // Send message to telegram and handle response
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println("Response output: " + response.toString());
 
         UpdateResponse responseParsed = JsonParsing.parseResponse(response, UpdateResponse.class);
         return responseParsed;
@@ -188,7 +184,6 @@ public class TelegramClient implements ITelegramClient{
         String url = GetBaseTelegramUrl(MethodType.ForwardMessage);
         String data = JsonSerializing.serialize(msg);
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println(response);
         MessageResponse responseParsed = JsonParsing.parseResponse(response, MessageResponse.class);
         return responseParsed;
     }
@@ -197,7 +192,6 @@ public class TelegramClient implements ITelegramClient{
         String url = GetBaseTelegramUrl(MethodType.KickChatMember);
         String data = JsonSerializing.serialize(toKick);
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println(response);
         BooleanResponse responseParsed = JsonParsing.parseResponse(response, BooleanResponse.class);
         return responseParsed;
     }
@@ -206,7 +200,6 @@ public class TelegramClient implements ITelegramClient{
         String url = GetBaseTelegramUrl(MethodType.UnbanChatMember);
         String data = JsonSerializing.serialize(toUnban);
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println(response);
         BooleanResponse responseParsed = JsonParsing.parseResponse(response, BooleanResponse.class);
         return responseParsed;
     }
@@ -215,7 +208,6 @@ public class TelegramClient implements ITelegramClient{
         String url = GetBaseTelegramUrl(MethodType.RestrictChatMember);
         String data = JsonSerializing.serialize(toRestrict);
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println(response);
         BooleanResponse responseParsed = JsonParsing.parseResponse(response, BooleanResponse.class);
         return responseParsed;
     }
@@ -224,7 +216,6 @@ public class TelegramClient implements ITelegramClient{
         String url = GetBaseTelegramUrl(MethodType.RestrictChatMember);
         String data = JsonSerializing.serialize(chat);
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println(response);
         ChatResponse responseParsed = JsonParsing.parseResponse(response, ChatResponse.class);
         return responseParsed;
     }
@@ -233,7 +224,6 @@ public class TelegramClient implements ITelegramClient{
         String url = GetBaseTelegramUrl(MethodType.RestrictChatMember);
         String data = JsonSerializing.serialize(chatId);
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println(response);
         BooleanResponse responseParsed = JsonParsing.parseResponse(response, BooleanResponse.class);
         return responseParsed;
     }
@@ -242,7 +232,6 @@ public class TelegramClient implements ITelegramClient{
         String url = GetBaseTelegramUrl(MethodType.GetChatAdministrators);
         String data = JsonSerializing.serialize(toGet);
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println(response);
         ChatMembersResponse responseParsed = JsonParsing.parseResponse(response, ChatMembersResponse.class);
         return responseParsed;
     }
@@ -251,7 +240,6 @@ public class TelegramClient implements ITelegramClient{
         String url = GetBaseTelegramUrl(MethodType.GetChatAdministrators);
         String data = JsonSerializing.serialize(toCount);
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println(response);
         IntegerResponse responseParsed = JsonParsing.parseResponse(response, IntegerResponse.class);
         return responseParsed;
     }
@@ -259,9 +247,7 @@ public class TelegramClient implements ITelegramClient{
     public MessageResponse SendInvoice(SendInvoice toSend){
         String url = GetBaseTelegramUrl(MethodType.SendInvoice);
         String data = JsonSerializing.serialize(toSend);
-        System.out.println("url: " + url + " data: " + data);
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println(response);
         MessageResponse responseParsed = JsonParsing.parseResponse(response, MessageResponse.class);
         return responseParsed;
     }
@@ -270,7 +256,6 @@ public class TelegramClient implements ITelegramClient{
         String url = GetBaseTelegramUrl(MethodType.AnswerShippingQuery);
         String data = JsonSerializing.serialize(toAnswer);
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println(response);
         BooleanResponse responseParsed = JsonParsing.parseResponse(response, BooleanResponse.class);
         return responseParsed;
     }
@@ -279,7 +264,6 @@ public class TelegramClient implements ITelegramClient{
         String url = GetBaseTelegramUrl(MethodType.AnswerPreCheckoutQuery);
         String data = JsonSerializing.serialize(toAnswer);
         HashMap<String, String> response = GetTelegramResponse(url, data);
-        System.out.println(response);
         BooleanResponse responseParsed = JsonParsing.parseResponse(response, BooleanResponse.class);
         return responseParsed;
     }
