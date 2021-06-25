@@ -52,8 +52,8 @@ public class Message{
     private final Long MigrateToChatId;
     private final Long MigrateFromChatId;
     private final Message PinnedMessage;
-    //private final Invoice Invoice;
-    //private final SuccessfulPayment SuccessfulPayment;
+    private final Invoice Invoice;
+    private final SuccessfulPayment SuccessfulPayment;
     private final String ConnectedWebsite;
     private final VoiceChatScheduled VoiceChatScheduled;
     private final VoiceChatEnded VoiceChatEnded;
@@ -107,8 +107,8 @@ public class Message{
         this.MigrateToChatId = builder.MigrateToChatId;
         this.MigrateFromChatId = builder.MigrateFromChatId;
         this.PinnedMessage = builder.PinnedMessage;
-        //this.Invoice = builder.Invoice;
-        //this.SuccessfulPayment = builder.SuccessfulPayment;
+        this.Invoice = builder.Invoice;
+        this.SuccessfulPayment = builder.SuccessfulPayment;
         this.ConnectedWebsite = builder.ConnectedWebsite;
         this.VoiceChatScheduled = builder.VoiceChatScheduled;
         this.VoiceChatEnded = builder.VoiceChatEnded;
@@ -209,10 +209,10 @@ public class Message{
     public Long getMigrateFromChatId(){return MigrateFromChatId;}
     @JsonProperty("pinned_message")
     public Message getPinnedMessage(){return PinnedMessage;}
-    //@JsonProperty("invoice")
-    //public Invoice getInvoice(){return Invoice;}
-    //@JsonProperty("successful_payment")
-    //public SuccessfulPayment getSuccessfulPayment(){return SuccessfulPayment;}
+    @JsonProperty("invoice")
+    public Invoice getInvoice(){return Invoice;}
+    @JsonProperty("successful_payment")
+    public SuccessfulPayment getSuccessfulPayment(){return SuccessfulPayment;}
     @JsonProperty("connected_website")
     public String getConnectedWebsite(){return ConnectedWebsite;}
     @JsonProperty("voice_chat_scheduled")
@@ -272,8 +272,8 @@ public class Message{
         private Long MigrateToChatId;
         private Long MigrateFromChatId;
         private Message PinnedMessage;
-        //private Invoice Invoice;
-        //private SuccessfulPayment SuccessfulPayment;
+        private Invoice Invoice;
+        private SuccessfulPayment SuccessfulPayment;
         private String ConnectedWebsite;
         private VoiceChatScheduled VoiceChatScheduled;
         private VoiceChatEnded VoiceChatEnded;
@@ -562,17 +562,17 @@ public class Message{
             return this;
         }
 
-        //@JsonProperty("invoice")
-        /*public Builder setInvoice(Invoice invoice){
+        @JsonProperty("invoice")
+        public Builder setInvoice(Invoice invoice){
             this.Invoice = invoice;
             return this;
-        }*/
+        }
 
-        //@JsonProperty("successful_payment")
-        /*public Builder setSuccessfulPayment(SuccessfulPayment sucPay){
+        @JsonProperty("successful_payment")
+        public Builder setSuccessfulPayment(SuccessfulPayment sucPay){
             this.SuccessfulPayment = sucPay;
             return this;
-        }*/
+        }
 
         @JsonProperty("connected_website")
         public Builder setConnectedWebsite(String conWeb){

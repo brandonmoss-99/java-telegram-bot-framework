@@ -13,6 +13,10 @@ import com.brandythewuff.tmethodtypes.*;
 //import com.brandythewuff.tresponsetypes.GetMeResponse;
 import com.brandythewuff.tresponsetypes.*;
 
+/** 
+ * Telegram client, containing methods for
+ * interacting with the Telegram API
+*/
 public class TelegramClient implements ITelegramClient{
     private String _token;
     /* static means it is visible to every instance of this class,
@@ -31,6 +35,9 @@ public class TelegramClient implements ITelegramClient{
 
     /* ----- Start of Helper methods ----- */
 
+    /**
+     * Generates the base URL (without any data) for sending requests to Telegram API
+     */
     public String GetBaseTelegramUrl(MethodType messageType){
         return MessageFormat.format("{0}{1}/{2}", BASE_URL, this._token, messageType.name());
     }
@@ -51,6 +58,7 @@ public class TelegramClient implements ITelegramClient{
         HttpResponse<String> response;
         try{
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.toString());
 
             if(response.statusCode() == 200){
                 toReturn.put("Ok", "True");
@@ -85,6 +93,10 @@ public class TelegramClient implements ITelegramClient{
 
     /* ----- Start of Telegram methods ----- */
 
+    /**
+     * Simple method for testing a bot's auth token
+     * @return Basic information about the bot in a GetMeResponse type
+     */
     public GetMeResponse GetMe(){
         // Build URL
         String url = GetBaseTelegramUrl(MethodType.GetMe);
@@ -154,6 +166,11 @@ public class TelegramClient implements ITelegramClient{
         return responseParsed;
     }
 
+    /**
+     * Send a Dice (or other emoji with random selection) message
+     * @param msg : {@code SendDice} - The SendDice object to send
+     * @return {@code MessageResponse} - The response data object
+     */
     public MessageResponse SendDice(SendDice msg){
         String url = GetBaseTelegramUrl(MethodType.SendDice);
         String data = JsonSerializing.serialize(msg);
@@ -162,6 +179,11 @@ public class TelegramClient implements ITelegramClient{
         return responseParsed;
     }
 
+    /**
+     * Forward a message to another chat
+     * @param msg : {@code ForwardMessage} - The ForwardMessage object to send
+     * @return {@code MessageResponse} - The response data object
+     */
     public MessageResponse ForwardMessage(ForwardMessage msg){
         String url = GetBaseTelegramUrl(MethodType.ForwardMessage);
         String data = JsonSerializing.serialize(msg);
@@ -234,6 +256,34 @@ public class TelegramClient implements ITelegramClient{
         return responseParsed;
     }
 
+    public MessageResponse SendInvoice(SendInvoice toSend){
+        String url = GetBaseTelegramUrl(MethodType.SendInvoice);
+        String data = JsonSerializing.serialize(toSend);
+        System.out.println("url: " + url + " data: " + data);
+        HashMap<String, String> response = GetTelegramResponse(url, data);
+        System.out.println(response);
+        MessageResponse responseParsed = JsonParsing.parseResponse(response, MessageResponse.class);
+        return responseParsed;
+    }
+
+    public BooleanResponse AnswerShippingQuery(AnswerShippingQuery toAnswer){
+        String url = GetBaseTelegramUrl(MethodType.AnswerShippingQuery);
+        String data = JsonSerializing.serialize(toAnswer);
+        HashMap<String, String> response = GetTelegramResponse(url, data);
+        System.out.println(response);
+        BooleanResponse responseParsed = JsonParsing.parseResponse(response, BooleanResponse.class);
+        return responseParsed;
+    }
+
+    public BooleanResponse AnswerPreCheckoutQuery(AnswerPreCheckoutQuery toAnswer){
+        String url = GetBaseTelegramUrl(MethodType.AnswerPreCheckoutQuery);
+        String data = JsonSerializing.serialize(toAnswer);
+        HashMap<String, String> response = GetTelegramResponse(url, data);
+        System.out.println(response);
+        BooleanResponse responseParsed = JsonParsing.parseResponse(response, BooleanResponse.class);
+        return responseParsed;
+    }
+
     /* ----- End of Telegram methods ----- */
 
     /*private <T> T processRequest(Class <T> returnType, Class <T> method, Object toSerialize){
@@ -261,7 +311,10 @@ public class TelegramClient implements ITelegramClient{
         GetChat,
         GetChatAdministrators,
         GetChatMembersCount,
-        GetChatMember;
+        GetChatMember,
+        SendInvoice,
+        AnswerShippingQuery,
+        AnswerPreCheckoutQuery;
 
         /* Variables and methods must be static, enum is a special 
         type which doesn't allow instances of, must make static to
