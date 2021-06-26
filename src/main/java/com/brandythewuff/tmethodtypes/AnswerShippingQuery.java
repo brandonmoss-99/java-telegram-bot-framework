@@ -1,6 +1,9 @@
 package com.brandythewuff.tmethodtypes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.brandythewuff.InvalidParamsException;
 import com.brandythewuff.telegramtypes.ShippingOption;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
@@ -58,8 +61,36 @@ public class AnswerShippingQuery {
         // Build method to deal with outer class, return an instance
         // Of the outer class, with all the parameters set in the
         // builder returned with it
-        public AnswerShippingQuery build(){
-            return new AnswerShippingQuery(this);
+        public AnswerShippingQuery build() throws InvalidParamsException{
+            HashMap<String, String> isValid = checkValid();
+            if(isValid.get("valid") == "true"){
+                return new AnswerShippingQuery(this);
+            }
+            else{
+                throw new InvalidParamsException(isValid.get("msg"));
+            }
+        }
+
+        private HashMap<String, String> checkValid(){
+            Boolean isValid = true;
+            HashMap<String, String> result = new HashMap<String, String>();
+            // Create StringBuilder with initial capacity 64 characters
+            StringBuilder errorMsg = new StringBuilder(64);
+
+            // shippingOptions required if ok is true
+            if(Ok && ShippingOptions == null){
+                errorMsg.append("Shipping options required when Ok. ");
+                isValid = false;
+            }
+            // errorMessage required if ok is false
+            else if (!Ok && ErrorMessage == null){
+                errorMsg.append("Error message required when not Ok. ");
+                isValid = false;
+            }
+
+            result.put("valid", Boolean.toString(isValid));
+            result.put("msg", errorMsg.toString());
+            return result;
         }
     }
 }

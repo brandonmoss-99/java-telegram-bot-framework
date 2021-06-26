@@ -1,7 +1,10 @@
 package com.brandythewuff.tmethodtypes;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
+import com.brandythewuff.InvalidParamsException;
 import com.brandythewuff.telegramtypes.LabeledPrice;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
@@ -220,8 +223,66 @@ public class SendInvoice {
         // Build method to deal with outer class, return an instance
         // Of the outer class, with all the parameters set in the
         // builder returned with it
-        public SendInvoice build(){
-            return new SendInvoice(this);
+        public SendInvoice build() throws InvalidParamsException{
+            HashMap<String, String> isValid = checkValid();
+            if(isValid.get("valid") == "true"){
+                return new SendInvoice(this);
+            }
+            else{
+                throw new InvalidParamsException(isValid.get("msg"));
+            }
+        }
+
+        private HashMap<String, String> checkValid(){
+            Boolean isValid = true;
+            HashMap<String, String> result = new HashMap<String, String>();
+            // Create StringBuilder with initial capacity 64 characters
+            StringBuilder errorMsg = new StringBuilder(64);
+
+            // title 1-32 characters
+            if(this.Title.length() < 1 || this.Title.length() > 32){
+                errorMsg.append("Title must be between 1-32 characters long. ");
+                isValid = false;
+            }
+
+            // description 1-255 characters
+            if(this.Description.length() < 1 || this.Description.length() > 255){
+                errorMsg.append("Description must be between 1-255 characters long. ");
+                isValid = false;
+            }
+
+            // payload 1-128 bytes
+            if(this.Payload.getBytes().length > 128){
+                errorMsg.append("Payload must be under 128 bytes. ");
+                isValid = false;
+            }
+
+            // currency 3 characters
+            if(this.Currency.length() != 3){
+                errorMsg.append("Currency code must be 3 characters long. ");
+                isValid = false;
+            }
+
+            // suggestedTipAmounts max of 4 entries, must be positive number, 
+            // must be in increasing order, must be less than maxTipAmount
+            if(this.SuggestedTipAmounts != null && this.SuggestedTipAmounts.size() > 4){
+                errorMsg.append("Maximum of 4 suggested tip amounts. ");
+                isValid = false;
+            }
+            else if (this.SuggestedTipAmounts != null){
+                Collections.sort(this.SuggestedTipAmounts);
+                if(this.SuggestedTipAmounts.get(this.SuggestedTipAmounts.size()-1) >= this.MaxTipAmount){
+                    errorMsg.append("Largest suggested tip amount must be less than max tip amount. ");
+                    isValid = false;
+                }
+                if(this.SuggestedTipAmounts.get(0) < 0){
+                    errorMsg.append("All suggested tip amounts must be positive number. ");
+                    isValid = false;
+                }
+            }
+            result.put("valid", Boolean.toString(isValid));
+            result.put("msg", errorMsg.toString());
+            return result;
         }
     }
 }

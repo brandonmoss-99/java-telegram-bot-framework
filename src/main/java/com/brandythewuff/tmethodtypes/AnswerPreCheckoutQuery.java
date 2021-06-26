@@ -1,5 +1,8 @@
 package com.brandythewuff.tmethodtypes;
 
+import java.util.HashMap;
+
+import com.brandythewuff.InvalidParamsException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 
@@ -49,8 +52,31 @@ public class AnswerPreCheckoutQuery {
         // Build method to deal with outer class, return an instance
         // Of the outer class, with all the parameters set in the
         // builder returned with it
-        public AnswerPreCheckoutQuery build(){
-            return new AnswerPreCheckoutQuery(this);
+        public AnswerPreCheckoutQuery build() throws InvalidParamsException{
+            HashMap<String, String> isValid = checkValid();
+            if(isValid.get("valid") == "true"){
+                return new AnswerPreCheckoutQuery(this);
+            }
+            else{
+                throw new InvalidParamsException(isValid.get("msg"));
+            }
+        }
+
+        private HashMap<String, String> checkValid(){
+            Boolean isValid = true;
+            HashMap<String, String> result = new HashMap<String, String>();
+            // Create StringBuilder with initial capacity 64 characters
+            StringBuilder errorMsg = new StringBuilder(64);
+
+            // ErrorMessage required if Ok is false
+            if (!Ok && ErrorMessage == null){
+                errorMsg.append("Error message required when not Ok. ");
+                isValid = false;
+            }
+            
+            result.put("valid", Boolean.toString(isValid));
+            result.put("msg", errorMsg.toString());
+            return result;
         }
     }
 }
