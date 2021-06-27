@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 import com.brandythewuff.telegramtypes.LabeledPrice;
 import com.brandythewuff.tmethodtypes.SendInvoice;
@@ -299,5 +297,4 @@ class basicInvoiceTest{
             SendInvoice.Builder.newInstance(123456789L, "testTitle", "testDescription", "testPayload", "testProviderToken:12345", "GBP", prices).setMaxTipAmount(1000).setSuggestedTipAmounts(suggestedTips).build();
         });
     }
-    
 }
