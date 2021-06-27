@@ -2,7 +2,7 @@
 A Telegram bot framework written in Java, for making the development of Telegram bots easier.
 
 ## Notice
-This is still a work in progress (Dev branch). There will be missing features, bugs, untested & undocumented code. The original end goal was always to help learn new coding techniques.
+This is still a work in progress (Dev branch). There will be missing features, bugs, untested & undocumented code. The original end goal was always to help me learn new coding techniques.
 
 ### Usage & bot examples
 This framework relies heavily on builder patterns, so bots using this will have plenty of `.build()` method calls. Below is a very basic Telegram bot code example that utilise the framework to function:
