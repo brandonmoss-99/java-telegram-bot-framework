@@ -27,6 +27,15 @@ class basicInvoiceTest{
     }
 
     @Test
+    void testBasicInvoiceValid() throws InvalidParamsException{
+        ArrayList<LabeledPrice> prices = new ArrayList<>();
+        prices.add(LabeledPrice.Builder.newInstance().setLabel("Total").setAmount(100).build());
+        assertDoesNotThrow(() -> {
+            SendInvoice.Builder.newInstance(123456789L, "testTitle", "testDescription", "testPayload", "testProviderToken:12345", "GBP", prices).build();
+        });
+    }
+
+    @Test
     void testExtendedInvoice() throws InvalidParamsException{
         ArrayList<LabeledPrice> prices = new ArrayList<>();
         prices.add(LabeledPrice.Builder.newInstance().setLabel("Total").setAmount(100).build());
@@ -79,6 +88,37 @@ class basicInvoiceTest{
         assertEquals(false, testSendInvoice.getDisableNotification());
         assertEquals(false, testSendInvoice.getAllowSendingWithoutReply());
         assertEquals(123456789, testSendInvoice.getReplyToMessageId());
+    }
+
+    @Test
+    void testExtendedInvoiceValid() throws InvalidParamsException{
+        ArrayList<LabeledPrice> prices = new ArrayList<>();
+        prices.add(LabeledPrice.Builder.newInstance().setLabel("Total").setAmount(100).build());
+        ArrayList<Integer> suggestedTips = new ArrayList<>();
+        suggestedTips.add(400);
+
+        assertDoesNotThrow(() -> {
+            SendInvoice.Builder.newInstance(123456789L, "testTitle", "testDescription", "testPayload", "testProviderToken:12345", "GBP", prices)
+            .setMaxTipAmount(1000)
+            .setSuggestedTipAmounts(suggestedTips)
+            .setStartParameter("testStartParam")
+            .setProviderData("testProviderData")
+            .setPhotoUrl("testPhotoURL")
+            .setPhotoSize(100)
+            .setPhotoHeight(100)
+            .setPhotoWidth(100)
+            .setNeedEmail(false)
+            .setNeedName(false)
+            .setNeedPhoneNumber(false)
+            .setNeedShippingAddress(false)
+            .setSendPhoneNumberToProvider(false)
+            .setSendEmailToProvider(false)
+            .setIsFlexible(false)
+            .setDisableNotification(false)
+            .setReplyToMessageId(123456789)
+            .setAllowSendingWithoutReply(false)
+            .build();
+        });
     }
 
     // --- Title tests --- //
