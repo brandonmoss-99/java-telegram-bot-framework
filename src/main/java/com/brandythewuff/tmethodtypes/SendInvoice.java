@@ -237,7 +237,7 @@ public class SendInvoice {
             Boolean isValid = true;
             HashMap<String, String> result = new HashMap<String, String>();
             // Create StringBuilder with initial capacity 64 characters
-            StringBuilder errorMsg = new StringBuilder(64);
+            StringBuilder errorMsg = new StringBuilder(128);
 
             // title 1-32 characters
             if(this.Title.length() < 1 || this.Title.length() > 32){
@@ -252,8 +252,8 @@ public class SendInvoice {
             }
 
             // payload 1-128 bytes
-            if(this.Payload.getBytes().length > 128){
-                errorMsg.append("Payload must be under 128 bytes. ");
+            if(this.Payload.getBytes().length < 1 || this.Payload.getBytes().length > 128){
+                errorMsg.append("Payload must be between 1-128 bytes. ");
                 isValid = false;
             }
 
@@ -265,14 +265,15 @@ public class SendInvoice {
 
             // suggestedTipAmounts max of 4 entries, must be positive number, 
             // must be in increasing order, must be less than maxTipAmount
-            if(this.SuggestedTipAmounts != null && this.SuggestedTipAmounts.size() > 4){
+            // maxTipAmount must be specified
+            if(this.SuggestedTipAmounts != null && this.MaxTipAmount != null && this.SuggestedTipAmounts.size() > 4){
                 errorMsg.append("Maximum of 4 suggested tip amounts. ");
                 isValid = false;
             }
-            else if (this.SuggestedTipAmounts != null){
+            else if (this.SuggestedTipAmounts != null && this.MaxTipAmount != null){
                 Collections.sort(this.SuggestedTipAmounts);
-                if(this.SuggestedTipAmounts.get(this.SuggestedTipAmounts.size()-1) >= this.MaxTipAmount){
-                    errorMsg.append("Largest suggested tip amount must be less than max tip amount. ");
+                if(this.SuggestedTipAmounts.get(this.SuggestedTipAmounts.size()-1) > this.MaxTipAmount){
+                    errorMsg.append("Largest suggested tip amount must be less than or equal to max tip amount. ");
                     isValid = false;
                 }
                 if(this.SuggestedTipAmounts.get(0) < 0){
@@ -280,6 +281,11 @@ public class SendInvoice {
                     isValid = false;
                 }
             }
+            else if (this.SuggestedTipAmounts != null && this.MaxTipAmount == null){
+                errorMsg.append("Max tip amount must also be specified. ");
+                isValid = false;
+            }
+
             result.put("valid", Boolean.toString(isValid));
             result.put("msg", errorMsg.toString());
             return result;
