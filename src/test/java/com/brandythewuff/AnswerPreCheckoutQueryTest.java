@@ -3,6 +3,7 @@ package com.brandythewuff;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,7 @@ class AnswerPreCheckoutQueryTest {
         Throwable exception = assertThrows(InvalidParamsException.class, () -> {
             AnswerPreCheckoutQuery.Builder.newInstance("testPreCheckoutId", false).build();
         });
+        assertEquals("Error message required when not Ok. ", exception.getMessage());;
     }
 
 }

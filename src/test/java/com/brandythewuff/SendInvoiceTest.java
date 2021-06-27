@@ -138,6 +138,7 @@ class basicInvoiceTest{
         Throwable exception = assertThrows(InvalidParamsException.class, () -> {
             SendInvoice.Builder.newInstance(123456789L, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "testDescription", "testPayload", "testProviderToken:12345", "GBP", prices).build();
         });
+        assertEquals("Title must be between 1-32 characters long. ", exception.getMessage());
     }
 
     @Test
@@ -156,6 +157,7 @@ class basicInvoiceTest{
         Throwable exception = assertThrows(InvalidParamsException.class, () -> {
             SendInvoice.Builder.newInstance(123456789L, "", "testDescription", "testPayload", "testProviderToken:12345", "GBP", prices).build();
         });
+        assertEquals("Title must be between 1-32 characters long. ", exception.getMessage());
     }
 
     // --- Description tests --- //
@@ -175,6 +177,7 @@ class basicInvoiceTest{
         Throwable exception = assertThrows(InvalidParamsException.class, () -> {
             SendInvoice.Builder.newInstance(123456789L, "testTitle", "", "testPayload", "testProviderToken:12345", "GBP", prices).build();
         });
+        assertEquals("Description must be between 1-255 characters long. ", exception.getMessage());
     }
 
     @Test
@@ -193,6 +196,7 @@ class basicInvoiceTest{
         Throwable exception = assertThrows(InvalidParamsException.class, () -> {
             SendInvoice.Builder.newInstance(123456789L, "testTitle", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "testPayload", "testProviderToken:12345", "GBP", prices).build();
         });
+        assertEquals("Description must be between 1-255 characters long. ", exception.getMessage());
     }
 
     // --- Payload tests --- //
@@ -212,6 +216,7 @@ class basicInvoiceTest{
         Throwable exception = assertThrows(InvalidParamsException.class, () -> {
             SendInvoice.Builder.newInstance(123456789L, "testTitle", "testDescription", "", "testProviderToken:12345", "GBP", prices).build();
         });
+        assertEquals("Payload must be between 1-128 bytes. ", exception.getMessage());
     }
 
     @Test
@@ -230,6 +235,7 @@ class basicInvoiceTest{
         Throwable exception = assertThrows(InvalidParamsException.class, () -> {
             SendInvoice.Builder.newInstance(123456789L, "testTitle", "testDescription", "testPayloadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "testProviderToken:12345", "GBP", prices).build();
         });
+        assertEquals("Payload must be between 1-128 bytes. ", exception.getMessage());
     }
 
     // --- Currency tests --- //
@@ -240,6 +246,7 @@ class basicInvoiceTest{
         Throwable exception = assertThrows(InvalidParamsException.class, () -> {
             SendInvoice.Builder.newInstance(123456789L, "testTitle", "testDescription", "testPayload", "testProviderToken:12345", "GBPP", prices).build();
         });
+        assertEquals("Currency code must be 3 characters long. ", exception.getMessage());
     }
 
     @Test
@@ -249,6 +256,7 @@ class basicInvoiceTest{
         Throwable exception = assertThrows(InvalidParamsException.class, () -> {
             SendInvoice.Builder.newInstance(123456789L, "testTitle", "testDescription", "testPayload", "testProviderToken:12345", "GB", prices).build();
         });
+        assertEquals("Currency code must be 3 characters long. ", exception.getMessage());
     }
 
 
@@ -280,6 +288,7 @@ class basicInvoiceTest{
         Throwable exception = assertThrows(InvalidParamsException.class, () -> {
             SendInvoice.Builder.newInstance(123456789L, "testTitle", "testDescription", "testPayload", "testProviderToken:12345", "GBP", prices).setMaxTipAmount(10000).setSuggestedTipAmounts(suggestedTips).build();
         });
+        assertEquals("Maximum of 4 suggested tip amounts. ", exception.getMessage());
     }
 
     @Test
@@ -322,6 +331,7 @@ class basicInvoiceTest{
         Throwable exception = assertThrows(InvalidParamsException.class, () -> {
             SendInvoice.Builder.newInstance(123456789L, "testTitle", "testDescription", "testPayload", "testProviderToken:12345", "GBP", prices).setMaxTipAmount(1000).setSuggestedTipAmounts(suggestedTips).build();
         });
+        assertEquals("Largest suggested tip amount must be less than or equal to max tip amount. ", exception.getMessage());
     }
 
     @Test
@@ -336,5 +346,18 @@ class basicInvoiceTest{
         Throwable exception = assertThrows(InvalidParamsException.class, () -> {
             SendInvoice.Builder.newInstance(123456789L, "testTitle", "testDescription", "testPayload", "testProviderToken:12345", "GBP", prices).setMaxTipAmount(1000).setSuggestedTipAmounts(suggestedTips).build();
         });
+        assertEquals("All suggested tip amounts must be positive number. ", exception.getMessage());
+    }
+
+    @Test
+    void testSuggestedTipsValueWithoutMaxAmount() throws InvalidParamsException{
+        ArrayList<LabeledPrice> prices = new ArrayList<>();
+        prices.add(LabeledPrice.Builder.newInstance().setLabel("thing0").setAmount(100).build());
+        ArrayList<Integer> suggestedTips = new ArrayList<>();
+        suggestedTips.add(100);
+        Throwable exception = assertThrows(InvalidParamsException.class, () -> {
+            SendInvoice.Builder.newInstance(123456789L, "testTitle", "testDescription", "testPayload", "testProviderToken:12345", "GBP", prices).setSuggestedTipAmounts(suggestedTips).build();
+        });
+        assertEquals("Max tip amount must also be specified. ", exception.getMessage());
     }
 }

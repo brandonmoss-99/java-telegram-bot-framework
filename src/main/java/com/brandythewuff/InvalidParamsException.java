@@ -12,6 +12,13 @@ public class InvalidParamsException extends Exception{
         message = msg;
     }
 
+    // Override default getMessage() behaviour of Exception class,
+    // to return our custom error message
+    @Override
+    public String getMessage(){
+        return message;
+    }
+
     public String toString(){
         return("InvalidParamsException: " + message);
     }
