@@ -9,13 +9,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 
 @JsonDeserialize(builder = AnswerShippingQuery.Builder.class)
-public class AnswerShippingQuery {
+public class AnswerShippingQuery extends TMethod {
     private final String ShippingQueryId; // Unique identifier for the query to be answered
     private final Boolean Ok; // True if delivery to the specified address is possible and False if there are any problems
     private final ArrayList<ShippingOption> ShippingOptions; // Required if ok is True. A JSON-serialized array of available shipping options.
     private final String ErrorMessage; // Required if ok is False. Error message in human readable form that explains why it is impossible to complete the order
 
     private AnswerShippingQuery(Builder builder){
+        url = "answerShippingQuery";
         this.ShippingQueryId = builder.ShippingQueryId;
         this.Ok = builder.Ok;
         this.ShippingOptions = builder.ShippingOptions;

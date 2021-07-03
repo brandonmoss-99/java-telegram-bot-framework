@@ -3,14 +3,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 
 @JsonDeserialize(builder = KickChatMember.Builder.class)
-public class KickChatMember {
-    private final String URL = "kickchatmember";
+public class KickChatMember extends TMethod {
     private final Integer ChatId;
     private final Integer UserId;
     private final Integer UntilDate;
     private final Boolean RevokeMessages;
 
     private KickChatMember(Builder builder){
+        url = "kickChatMember";
         this.ChatId = builder.ChatId;
         this.UserId = builder.UserId;
         this.UntilDate = builder.UntilDate;
@@ -18,8 +18,7 @@ public class KickChatMember {
     }
 
     // Getter methods
-
-    public String getURL(){return URL;}
+    
     @JsonProperty("chat_id")
     public Integer getChatId(){return ChatId;}
     @JsonProperty("user_id")

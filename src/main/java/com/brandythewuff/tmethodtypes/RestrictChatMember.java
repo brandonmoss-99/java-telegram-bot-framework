@@ -4,13 +4,14 @@ import com.fasterxml.jackson.databind.annotation.*;
 import com.brandythewuff.telegramtypes.*;
 
 @JsonDeserialize(builder = RestrictChatMember.Builder.class)
-public class RestrictChatMember {
+public class RestrictChatMember extends TMethod{
     private final Integer ChatId;
     private final Integer UserId;
     private final Integer UntilDate;
     private final ChatPermissions Permissions;
 
     private RestrictChatMember(Builder builder){
+        url = "restrictChatMember";
         this.ChatId = builder.ChatId;
         this.UserId = builder.UserId;
         this.UntilDate = builder.UntilDate;

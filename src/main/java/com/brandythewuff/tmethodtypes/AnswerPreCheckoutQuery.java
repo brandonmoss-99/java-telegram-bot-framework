@@ -7,12 +7,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 
 @JsonDeserialize(builder = AnswerPreCheckoutQuery.Builder.class)
-public class AnswerPreCheckoutQuery {
+public class AnswerPreCheckoutQuery extends TMethod{
     private final String PreCheckoutQueryId; // Unique identifier for the query to be answered
     private final Boolean Ok; // True if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use False if there are any problems.
     private final String ErrorMessage; // Required if ok is False. Error message in human readable form that explains the reason for failure to proceed with the checkout
 
     private AnswerPreCheckoutQuery(Builder builder){
+        url = "answerPreCheckoutQuery";
         this.PreCheckoutQueryId = builder.PreCheckoutQueryId;
         this.Ok = builder.Ok;
         this.ErrorMessage = builder.ErrorMessage;

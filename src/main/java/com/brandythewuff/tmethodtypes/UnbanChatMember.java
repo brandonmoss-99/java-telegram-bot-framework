@@ -4,12 +4,13 @@ import com.fasterxml.jackson.databind.annotation.*;
 
 
 @JsonDeserialize(builder = UnbanChatMember.Builder.class)
-public class UnbanChatMember {
+public class UnbanChatMember extends TMethod{
     private final Integer ChatId;
     private final Integer UserId;
     private final Boolean OnlyIfBanned;
 
     private UnbanChatMember(Builder builder){
+        url = "unbanChatMember";
         this.ChatId = builder.ChatId;
         this.UserId = builder.UserId;
         this.OnlyIfBanned = builder.OnlyIfBanned;

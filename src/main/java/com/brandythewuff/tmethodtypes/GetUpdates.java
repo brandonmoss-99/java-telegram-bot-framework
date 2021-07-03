@@ -5,13 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 
 @JsonDeserialize(builder = GetUpdates.Builder.class)
-public class GetUpdates{
+public class GetUpdates extends TMethod{
     private final Integer Offset;
     private final Integer Limit;
     private final Integer Timeout;
     private final ArrayList<String> AllowedUpdates;
 
     private GetUpdates(Builder builder){
+        url = "getUpdates";
         this.Offset = builder.Offset;
         this.Limit = builder.Limit;
         this.Timeout = builder.Timeout;

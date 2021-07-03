@@ -3,13 +3,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 
 @JsonDeserialize(builder = ForwardMessage.Builder.class)
-public class ForwardMessage {
+public class ForwardMessage extends TMethod {
     private final Integer ChatId;
     private final Integer FromChatId;
     private final Boolean DisableNotifications;
     private final Integer MessageId;
 
     private ForwardMessage(Builder builder){
+        url = "forwardMessage";
         this.ChatId = builder.ChatId;
         this.FromChatId = builder.FromChatId;
         this.DisableNotifications = builder.DisableNotifications;

@@ -1,11 +1,12 @@
 package com.brandythewuff.tmethodtypes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GetChatMember {
+public class GetChatMember extends TMethod{
     private final Integer ChatId;
     private final Integer UserId;
 
     public GetChatMember(Integer chatId, Integer userId){
+        url = "getChatMember";
         ChatId = chatId;
         UserId = userId;
     }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 
 @JsonDeserialize(builder = SendDice.Builder.class)
-public class SendDice {
+public class SendDice extends TMethod {
     private final Integer ChatId;
     private final String Emoji;
     private final Boolean DisableNotification;
@@ -12,6 +12,7 @@ public class SendDice {
     private final Boolean AllowSendingWithoutReply;
 
     private SendDice(Builder builder){
+        url = "sendDice";
         this.ChatId = builder.ChatId;
         this.Emoji = builder.Emoji;
         this.DisableNotification = builder.DisableNotification;

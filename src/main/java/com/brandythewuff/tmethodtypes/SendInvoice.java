@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 
 @JsonDeserialize(builder = SendInvoice.Builder.class)
-public class SendInvoice {
+public class SendInvoice extends TMethod{
     private final Long ChatId; // Unique identifier for the target chat
     private final String Title; // Product name, 1-32 characters
     private final String Description; // Product description, 1-255 characters
@@ -39,6 +39,7 @@ public class SendInvoice {
     //private final InlineKeyboardMarkup ReplyMarkup; //  JSON-serialized object for an inline keyboard
 
     private SendInvoice(Builder builder){
+        url = "sendInvoice";
         this.ChatId = builder.ChatId;
         this.Title = builder.Title;
         this.Description = builder.Description;

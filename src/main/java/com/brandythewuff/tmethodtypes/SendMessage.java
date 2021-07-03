@@ -8,7 +8,7 @@ import com.brandythewuff.IMethodType;
 import com.brandythewuff.telegramtypes.*;
 
 @JsonDeserialize(builder = SendMessage.Builder.class)
-public class SendMessage{
+public class SendMessage extends TMethod{
     //private String Chat_id_string;
     private final Long ChatIdInt;
     private final String Text;
@@ -24,6 +24,7 @@ public class SendMessage{
     //private final ForceReply ReplyMarkupForceReply;
 
     private SendMessage(Builder builder){
+        url = "sendMessage";
         this.ChatIdInt = builder.ChatIdInt;
         this.Text = builder.Text;
         this.ParseMode = builder.ParseMode;
