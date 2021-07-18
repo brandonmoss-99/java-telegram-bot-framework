@@ -12,7 +12,7 @@ public class Update{
     private final Message EditedChannelPost; // New version of a channel post that is known to the bot and was edited
     //private final InlineQuery InlineQuery; // New incoming inline query
     //private final ChosenInlineResult ChosenInlineResult; // result of an inline query that was chosen by a user and sent to their chat partner
-    //private final CallbackQuery CallbackQuery; // New incoming callback query
+    private final CallbackQuery CallbackQuery; // New incoming callback query
     private final ShippingQuery ShippingQuery; // New incoming shipping query. Only for invoices with flexible price
     private final PreCheckoutQuery PreCheckoutQuery; // New incoming pre-checkout query. Contains full information about checkout
     private final Poll Poll; // New poll state. Bots receive only updates about stopped polls and polls
@@ -32,7 +32,7 @@ public class Update{
         this.EditedChannelPost = builder.EditedChannelPost;
         //this.InlineQuery = builder.InlineQuery;
         //this.ChosenInlineResult = builder.ChosenInlineResult;
-        //this.CallbackQuery = builder.CallbackQuery;
+        this.CallbackQuery = builder.CallbackQuery;
         this.ShippingQuery = builder.ShippingQuery;
         this.PreCheckoutQuery = builder.PreCheckoutQuery;
         this.Poll = builder.Poll;
@@ -56,8 +56,8 @@ public class Update{
     //public InlineQuery getInlineQuery(){return InlineQuery;}
     //@JsonProperty("chosen_inline_result")
     //public ChosenInlineResult getChosenInlineResult(){return ChosenInlineResult;}
-    //@JsonProperty("callback_query")
-    //public CallbackQuery getCallbackQuery(){return CallbackQuery;}
+    @JsonProperty("callback_query")
+    public CallbackQuery getCallbackQuery(){return CallbackQuery;}
     @JsonProperty("shipping_query")
     public ShippingQuery getShippingQuery(){return ShippingQuery;}
     @JsonProperty("pre_checkout_query")
@@ -81,7 +81,7 @@ public class Update{
         private Message EditedChannelPost;
         //private InlineQuery InlineQuery; // New incoming inline query
         //private ChosenInlineResult ChosenInlineResult; // result of an inline query that was chosen by a user and sent to their chat partner
-        //private CallbackQuery CallbackQuery; // New incoming callback query
+        private CallbackQuery CallbackQuery; // New incoming callback query
         private ShippingQuery ShippingQuery; // New incoming shipping query. Only for invoices with flexible price
         private PreCheckoutQuery PreCheckoutQuery; // New incoming pre-checkout query. Contains full information about checkout
         private Poll Poll; // New poll state. Bots receive only updates about stopped polls and polls
@@ -130,8 +130,8 @@ public class Update{
         //public Builder setInlineQuery(InlineQuery inlineQ){this.InlineQuery = inlineQ;return this;}
         //@JsonProperty("chosen_inline_result")
         //public Builder setChosenInlineResult(ChosenInlineResult chosenIlResult){this.ChosenInlineResult = chosenIlResult;return this;}
-        //@JsonProperty("callback_query")
-        //public Builder setCallbackQuery(CallbackQuery cbQuery){this.CallbackQuery = cbQuery;return this;}
+        @JsonProperty("callback_query")
+        public Builder setCallbackQuery(CallbackQuery cbQuery){this.CallbackQuery = cbQuery;return this;}
         @JsonProperty("shipping_query")
         public Builder setShippingQuery(ShippingQuery shQuery){this.ShippingQuery = shQuery;return this;}
         @JsonProperty("pre_checkout_query")
