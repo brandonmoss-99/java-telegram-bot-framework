@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
 
-import com.brandythewuff.IMethodType;
 import com.brandythewuff.telegramtypes.*;
 
 @JsonDeserialize(builder = SendMessage.Builder.class)

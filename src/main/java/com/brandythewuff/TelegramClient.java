@@ -43,6 +43,15 @@ public class TelegramClient{
     }
 
     /**
+     * Generates the URL part of the request to Telegram, for a pre-serialized object
+     * @param toGet - The Telegram method name to use
+     * @return {@code String} - The constructed URL part of request
+     */
+    public String GetBaseTelegramUrl(String toGet){
+        return MessageFormat.format("{0}{1}/{2}", BASE_URL, this._token, toGet);
+    }
+
+    /**
      * Send a request to Telegram, and return the response
      * @param url - The URL part of the request, returned by the
      *  {@link #GetBaseTelegramUrl(TMethod)} method
@@ -108,7 +117,27 @@ public class TelegramClient{
      */
     private <T> T processRequest(Class <T> returnType, TMethod method){
         String url = GetBaseTelegramUrl(method);
+        System.out.println("URL: " + url + "\n");
         String data = method.getClass().getName() != "GetMe" ? JsonSerializing.serialize(method) : "";
+        System.out.println("Data: " + data + "\n");
+        HashMap<String, String> response = GetTelegramResponse(url, data);
+        T responseParsed = JsonParsing.parseResponse(response, returnType);
+        return responseParsed;
+    }
+
+    /**
+     * Handle the creation, sending, and receiving of a Telegram method request, with a pre-serialized object
+     * @param <T> - The appropriate response object type for the method given
+     * @param returnType - The class to use for handling the response for the method
+     * @param method - The method instance to use for creating/sending request
+     * @param serializedString - The serialized object to use, avoid using the provided serializer method
+     * @return - The Telegram response, in the object Type specified in returnType
+     */
+    private <T> T processRequest(Class <T> returnType, String method, String serializedString){
+        String url = GetBaseTelegramUrl(method);
+        System.out.println("URL: " + url + "\n");
+        String data = method != "GetMe" ? serializedString : "";
+        System.out.println("Data: " + data + "\n");
         HashMap<String, String> response = GetTelegramResponse(url, data);
         T responseParsed = JsonParsing.parseResponse(response, returnType);
         return responseParsed;
@@ -143,6 +172,10 @@ public class TelegramClient{
         return processRequest(UpdateResponse.class, update);
     }
 
+    public UpdateResponse GetUpdates(String update){
+        return processRequest(UpdateResponse.class, "GetUpdates", update);
+    }
+
     /**
      * Send a text message to Telegram
      * @param msg : {@code SendMessage} - The 
@@ -154,6 +187,10 @@ public class TelegramClient{
      */
     public MessageResponse SendMessage(SendMessage msg){
         return processRequest(MessageResponse.class, msg);
+    }
+
+    public MessageResponse SendMessage(String msg){
+        return processRequest(MessageResponse.class, "SendMessage", msg);
     }
 
     /**
@@ -169,6 +206,10 @@ public class TelegramClient{
         return processRequest(MessageResponse.class, dice);
     }
 
+    public MessageResponse SendDice(String msg){
+        return processRequest(MessageResponse.class, "SendDice", msg);
+    }
+
     /**
      * Forward a message to another chat
      * @param msg : {@code ForwardMessage} - The
@@ -180,6 +221,10 @@ public class TelegramClient{
      */
     public MessageResponse ForwardMessage(ForwardMessage msg){
         return processRequest(MessageResponse.class, msg);
+    }
+
+    public MessageResponse ForwardMessage(String msg){
+        return processRequest(MessageResponse.class, "ForwardMessage", msg);
     }
 
     /**
@@ -195,6 +240,10 @@ public class TelegramClient{
         return processRequest(BooleanResponse.class, toKick);
     }
 
+    public BooleanResponse KickChatMember(String toKick){
+        return processRequest(BooleanResponse.class, "KickChatMember", toKick);
+    }
+
     /**
      * Kick/unban chat member from a group
      * @param toUnban : {@code UnbanChatMember} - The
@@ -206,6 +255,10 @@ public class TelegramClient{
      */
     public BooleanResponse UnbanChatMember(UnbanChatMember toUnban){
         return processRequest(BooleanResponse.class, toUnban);
+    }
+
+    public BooleanResponse UnbanChatMember(String toUnban){
+        return processRequest(BooleanResponse.class, "UnbanChatMember", toUnban);
     }
 
     /**
@@ -221,6 +274,10 @@ public class TelegramClient{
         return processRequest(BooleanResponse.class, toRestrict);
     }
 
+    public BooleanResponse RestrictChatMember(String toRestrict){
+        return processRequest(BooleanResponse.class, "RestrictChatMember", toRestrict);
+    }
+
     /**
      * Get information about a chat
      * @param chat : {@code GetChat} - The
@@ -232,6 +289,10 @@ public class TelegramClient{
      */
     public ChatResponse GetChat(GetChat chat){
         return processRequest(ChatResponse.class, chat);
+    }
+
+    public ChatResponse GetChat(String chat){
+        return processRequest(ChatResponse.class, "GetChat", chat);
     }
 
     /**
@@ -247,6 +308,10 @@ public class TelegramClient{
         return processRequest(BooleanResponse.class, toLeave);
     }
 
+    public BooleanResponse LeaveChat(String toLeave){
+        return processRequest(BooleanResponse.class, "LeaveChat", toLeave);
+    }
+
     /**
      * Get a list of chat admin information
      * @param toGet : {@code GetChatAdministrators} - The
@@ -258,6 +323,10 @@ public class TelegramClient{
      */
     public ChatMembersResponse GetChatAdministrators(GetChatAdministrators toGet){
         return processRequest(ChatMembersResponse.class, toGet);
+    }
+
+    public ChatMembersResponse GetChatAdministrators(String toGet){
+        return processRequest(ChatMembersResponse.class, "GetChatAdministrators", toGet);
     }
 
     /**
@@ -273,6 +342,10 @@ public class TelegramClient{
         return processRequest(IntegerResponse.class, toCount);
     }
 
+    public IntegerResponse GetChatMembersCount(String toCount){
+        return processRequest(IntegerResponse.class, "GetChatMembersCount", toCount);
+    }
+
     /**
      * Send an invoice
      * @param toSend : {@code SendInvoice} - The
@@ -284,6 +357,10 @@ public class TelegramClient{
      */
     public MessageResponse SendInvoice(SendInvoice toSend){
         return processRequest(MessageResponse.class, toSend);
+    }
+
+    public MessageResponse SendInvoice(String toSend){
+        return processRequest(MessageResponse.class, "SendInvoice", toSend);
     }
 
     /**
@@ -300,6 +377,10 @@ public class TelegramClient{
         return processRequest(BooleanResponse.class, toAnswer);
     }
 
+    public BooleanResponse AnswerShippingQuery(String toAnswer){
+        return processRequest(BooleanResponse.class, "AnswerShippingQuery", toAnswer);
+    }
+
     /**
      * Respond to a pre-checkout query. This is the 'final confirmation' method
      *  for a purchase, once sent, the transaction handling/cancellation happens
@@ -312,6 +393,10 @@ public class TelegramClient{
      */
     public BooleanResponse AnswerPreCheckoutQuery(AnswerPreCheckoutQuery toAnswer){
         return processRequest(BooleanResponse.class, toAnswer);
+    }
+
+    public BooleanResponse AnswerPreCheckoutQuery(String toAnswer){
+        return processRequest(BooleanResponse.class, "AnswerPreCheckoutQuery", toAnswer);
     }
 
     /* ----- End of Telegram methods ----- */
