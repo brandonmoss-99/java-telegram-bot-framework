@@ -117,9 +117,7 @@ public class TelegramClient{
      */
     private <T> T processRequest(Class <T> returnType, TMethod method){
         String url = GetBaseTelegramUrl(method);
-        System.out.println("URL: " + url + "\n");
         String data = method.getClass().getName() != "GetMe" ? JsonSerializing.serialize(method) : "";
-        System.out.println("Data: " + data + "\n");
         HashMap<String, String> response = GetTelegramResponse(url, data);
         T responseParsed = JsonParsing.parseResponse(response, returnType);
         return responseParsed;
@@ -135,9 +133,7 @@ public class TelegramClient{
      */
     private <T> T processRequest(Class <T> returnType, String method, String serializedString){
         String url = GetBaseTelegramUrl(method);
-        System.out.println("URL: " + url + "\n");
         String data = method != "GetMe" ? serializedString : "";
-        System.out.println("Data: " + data + "\n");
         HashMap<String, String> response = GetTelegramResponse(url, data);
         T responseParsed = JsonParsing.parseResponse(response, returnType);
         return responseParsed;
