@@ -6,7 +6,7 @@ import com.brandythewuff.InvalidParamsException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 
-public class AnswerCallbackQuery {
+public class AnswerCallbackQuery extends TMethod {
     private final String CallbackQueryId; // Unique ID for the query to be answered
     private final String Text; // Text of notification. 0-200 characters
     private final Boolean ShowAlert; // True will send alert to client instead of notification at top of chat screen
@@ -14,6 +14,7 @@ public class AnswerCallbackQuery {
     private final Integer CacheTime; // Max time in seconds that results from callbackQuery are cached client-side
 
     private AnswerCallbackQuery(Builder builder){
+        url = "AnswerCallbackQuery";
         this.CallbackQueryId = builder.CallbackQueryId;
         this.Text = builder.Text;
         this.ShowAlert = builder.ShowAlert;
