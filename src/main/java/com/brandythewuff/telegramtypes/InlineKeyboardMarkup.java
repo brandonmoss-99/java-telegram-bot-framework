@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 
+@JsonDeserialize(builder = InlineKeyboardMarkup.Builder.class)
 public class InlineKeyboardMarkup {
     private final ArrayList<ArrayList<InlineKeyboardButton>> InlineKeyboard;
 

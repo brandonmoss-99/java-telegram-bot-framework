@@ -3,6 +3,7 @@ package com.brandythewuff.telegramtypes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 
+@JsonDeserialize(builder = InlineKeyboardButton.Builder.class)
 public class InlineKeyboardButton {
     // Must use exactly one of the optional fields (everything but Text)
 

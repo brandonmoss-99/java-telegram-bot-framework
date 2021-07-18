@@ -395,6 +395,24 @@ public class TelegramClient{
         return processRequest(BooleanResponse.class, "AnswerPreCheckoutQuery", toAnswer);
     }
 
+    /**
+     * Respond to a callback query. Telegram clients will show a loading icon until
+     * this is sent back
+     * @param toAnswer : {@code AnswerCallbackQuery} - The
+     *  {@link com.brandythewuff.tmethodtypes.AnswerCallbackQuery AnswerCallbackQuery}
+     *  object to send
+     * @return {@code BooleanResponse} - A
+     *  {@link com.brandythewuff.tresponsetypes.BooleanResponse BooleanResponse}
+     *  object, containing response data
+     */
+    public BooleanResponse AnswerCallbackQuery(AnswerCallbackQuery toAnswer){
+        return processRequest(BooleanResponse.class, toAnswer);
+    }
+
+    public BooleanResponse AnswerCallbackQuery(String toAnswer){
+        return processRequest(BooleanResponse.class, "AnswerCallbackQuery", toAnswer);
+    }
+
     /* ----- End of Telegram methods ----- */
 
 }

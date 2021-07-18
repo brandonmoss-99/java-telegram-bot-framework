@@ -3,6 +3,7 @@ package com.brandythewuff.telegramtypes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.*;
 
+@JsonDeserialize(builder = CallbackQuery.Builder.class)
 public class CallbackQuery {
     private final String Id; // Unique ID for query
     private final User From; // Sender
