@@ -190,6 +190,23 @@ public class TelegramClient{
     }
 
     /**
+     * Send a message deletion request to Telegram
+     * @param msg : {@code DeleteMessage} - The 
+     * {@link com.brandythewuff.tmethodtypes.DeleteMessage DeleteMessage} 
+     *  object to send
+     * @return {@code BooleanResponse} - A
+     *  {@link com.brandythewuff.tresponsetypes.BooleanResponse BooleanResponse}
+     *  object, containing response data
+     */
+    public BooleanResponse DeleteMessage(DeleteMessage msg){
+        return processRequest(BooleanResponse.class, msg);
+    }
+
+    public BooleanResponse DeleteMessage(String msg){
+        return processRequest(BooleanResponse.class, "DeleteMessage", msg);
+    }
+
+    /**
      * Send a Dice (or other emoji with random selection) message
      * @param dice : {@code SendDice} - The
      *  {@link com.brandythewuff.tmethodtypes.SendDice SendDice}
