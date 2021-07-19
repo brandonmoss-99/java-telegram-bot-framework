@@ -118,7 +118,7 @@ public class Message{
 
     // Getter methods
     @JsonProperty("message_id")
-    public Integer getMessage_id(){return MessageId;}
+    public Integer getMessageId(){return MessageId;}
     @JsonProperty("date")
     public Integer getDate(){return Date;}
     @JsonProperty("text")
@@ -288,7 +288,7 @@ public class Message{
 
         // Setter methods
         @JsonProperty("message_id")
-        public Builder setMessage_id(Integer msgId){
+        public Builder setMessageId(Integer msgId){
             this.MessageId = msgId;
             return this;
         }
