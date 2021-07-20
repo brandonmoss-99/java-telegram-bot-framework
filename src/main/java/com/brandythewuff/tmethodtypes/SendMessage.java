@@ -18,7 +18,7 @@ public class SendMessage extends TMethod{
     private final Integer ReplyToMessageId;
     private final Boolean AllowSendingWithoutReply;
     private final InlineKeyboardMarkup ReplyMarkupInlineKeyboardMarkup;
-    private final ReplyKeyboardMarkup ReplyMarkupReplyKeyboardMarkup;
+    //private final InlineKeyboardMarkup ReplyMarkupReplyKeyboardMarkup;
     //private final ReplyKeyboardRemove ReplyMarkupReplyKeyboardRemove;
     //private final ForceReply ReplyMarkupForceReply;
 
@@ -33,7 +33,7 @@ public class SendMessage extends TMethod{
         this.ReplyToMessageId = builder.ReplyToMessageId;
         this.AllowSendingWithoutReply = builder.AllowSendingWithoutReply;
         this.ReplyMarkupInlineKeyboardMarkup = builder.ReplyMarkupInlineKeyboardMarkup;
-        this.ReplyMarkupReplyKeyboardMarkup = builder.ReplyMarkupReplyKeyboardMarkup;
+        //this.ReplyMarkupReplyKeyboardMarkup = builder.ReplyMarkupReplyKeyboardMarkup;
         //this.ReplyMarkupReplyKeyboardRemove = builder.ReplyMarkupReplyKeyboardRemove;
         //this.ReplyMarkupForceReply = builder.ReplyMarkupForceReply;
     }
@@ -57,10 +57,9 @@ public class SendMessage extends TMethod{
     public Boolean getAllowSendingWithoutReply(){return AllowSendingWithoutReply;}
     @JsonProperty("reply_markup")
     public InlineKeyboardMarkup getReplyMarkupInlineKeyboardMarkup(){return ReplyMarkupInlineKeyboardMarkup;}
-    @JsonProperty("reply_markup")
-    public ReplyKeyboardMarkup getReplyMarkupReplyKeyboardMarkup(){return ReplyMarkupReplyKeyboardMarkup;}
-    //public ReplyKeyboardRemove getReplyMarkupReplyKeyboardRemove(){return ReplyMarkupReplyKeyboardRemove;}
-    //public ForceReply getReplyMarkupForceReply(){return ReplyMarkupForceReply;}
+    //public InlineKeyboardMarkup getReplyMarkupReplyKeyboardMarkup(){return ReplyMarkupReplyKeyboardMarkup;}
+    //public InlineKeyboardMarkup getReplyMarkupReplyKeyboardRemove(){return ReplyMarkupReplyKeyboardRemove;}
+    //public InlineKeyboardMarkup getReplyMarkupForceReply(){return ReplyMarkupForceReply;}
 
     @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder{
@@ -74,7 +73,7 @@ public class SendMessage extends TMethod{
         private Integer ReplyToMessageId;
         private Boolean AllowSendingWithoutReply = null;
         private InlineKeyboardMarkup ReplyMarkupInlineKeyboardMarkup;
-        private ReplyKeyboardMarkup ReplyMarkupReplyKeyboardMarkup;
+        //private InlineKeyboardMarkup ReplyMarkupReplyKeyboardMarkup;
         //private ReplyKeyboardRemove ReplyMarkupReplyKeyboardRemove;
         //private ForceReply ReplyMarkupReplyKeyboardRemove;
 
@@ -142,15 +141,15 @@ public class SendMessage extends TMethod{
             return this;
         }
 
-        @JsonProperty("reply_markup_reply_keyboard_markup")
-        public Builder setReplyMarkupReplyKeyboardMarkup(ReplyKeyboardMarkup mReplyMarkup){
-            this.ReplyMarkupReplyKeyboardMarkup = mReplyMarkup;
+        /*@JsonProperty("reply_markup_reply_keyboard_markup")
+        public Builder setReplyMarkupReplyKeyboardMarkup(InlineKeyboardMarkup mReplyMarkup){
+            this.ReplyMarkupInlineKeyboardMarkup = mReplyMarkup;
             return this;
-        }
+        }*/
 
         /*@JsonProperty("reply_markup_reply_keyboard_remove")
-        public Builder setReplyMarkupReplyKeyboardRemove(ReplyKeyboardRemove mReplyRemove){
-            this.ReplyMarkupReplyKeyboardRemove = mReplyRemove;
+        public Builder setReplyMarkupReplyKeyboardRemove(InlineKeyboardMarkup mReplyRemove){
+            this.ReplyMarkupInlineKeyboardMarkup = mReplyRemove;
             return this;
         }*/
 
